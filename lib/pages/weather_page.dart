@@ -15,10 +15,11 @@ class _WeatherPageState extends State<WeatherPage> {
   late String cityName = "New Delhi";
   late String condition = '';
 
-  Future<void> setWeatherData() async {
+  Future<void> setWeatherData(String userCityName) async {
     WeatherService weatherService = WeatherService(cityName: cityName);
     dynamic weatherData = await weatherService.getWeatherData();
     setState(() {
+      cityName = userCityName;
       temperature = weatherData['main']['temp'];
       intTemp = temperature.toInt();
       condition = weatherData['weather'][0]['main'];
@@ -28,7 +29,6 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   void initState() {
     super.initState();
-    setWeatherData();
   }
 
   @override
@@ -43,6 +43,10 @@ class _WeatherPageState extends State<WeatherPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  textInputAction: TextInputAction.done,
+                  onSubmitted: (value) {
+                    setWeatherData(value);
+                  },
                   controller: textController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
