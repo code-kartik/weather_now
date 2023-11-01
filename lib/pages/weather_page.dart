@@ -13,7 +13,7 @@ class _WeatherPageState extends State<WeatherPage> {
   var textController = TextEditingController();
   double temperature = 0;
   int intTemp = 0;
-  late String cityName = "";
+  late String cityName = "City";
   late String condition = '';
 
   Future<void> setWeatherData(String userCityName) async {
@@ -76,7 +76,11 @@ class _WeatherPageState extends State<WeatherPage> {
               const SizedBox(
                 height: 200,
               ),
-              Image.asset('lib/assets/icons/clouds.gif'),
+              Image.asset(
+                'lib/assets/icons/clouds.gif',
+                height: 80,
+                width: 80,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

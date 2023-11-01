@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class WeatherService {
   String apiKey = "fa7ff9c1f890d9e2ab861788a886f310";
-  final String cityName;
+  String cityName = "Palo Alto";
 
   WeatherService({required this.cityName});
 
