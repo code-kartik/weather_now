@@ -49,16 +49,19 @@ class _WeatherPageState extends State<WeatherPage> {
                     setWeatherData(value);
                   },
                   controller: textController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(25.0),
                       ),
                     ),
                     hintText: "Search City...",
-                    contentPadding: EdgeInsets.all(6.0),
-                    suffixIcon: Icon(Icons.close),
-                    prefixIcon: Icon(Icons.search),
+                    contentPadding: const EdgeInsets.all(6.0),
+                    suffixIcon: IconButton(
+                      onPressed: () => textController.text = "",
+                      icon: const Icon(Icons.close),
+                    ),
+                    prefixIcon: const Icon(Icons.search),
                   ),
                 ),
               ),
