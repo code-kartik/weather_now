@@ -73,9 +73,6 @@ class _WeatherPageState extends State<WeatherPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 200,
-              ),
               Image.asset(
                 'lib/assets/icons/clouds.gif',
                 height: 80,
