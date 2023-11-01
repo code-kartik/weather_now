@@ -17,7 +17,6 @@ class WeatherService {
 
       return weatherData;
     } else {
-      print(response.statusCode);
       throw Exception("Can't connect to API");
     }
   }
