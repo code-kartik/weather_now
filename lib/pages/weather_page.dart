@@ -15,11 +15,31 @@ class _WeatherPageState extends State<WeatherPage> {
   int intTemp = 0;
   late String cityName = "City";
   late String condition = '';
+  late int weatherId = 0;
+
+  late String imageName = "lib/assets/icons/white.jpg";
 
   Future<void> setWeatherData(String userCityName) async {
     WeatherService weatherService = WeatherService(cityName: cityName);
     dynamic weatherData = await weatherService.getWeatherData();
+
     setState(() {
+      weatherId = weatherData["weather"][0]["id"];
+      if (weatherId >= 200 && weatherId < 400) {
+        imageName = "lib/assets/icons/storm.gif";
+      } else if (weatherId >= 500 && weatherId < 600) {
+        imageName = "lib/assets/icons/rain.gif";
+      } else if (weatherId >= 600 && weatherId < 700) {
+        imageName = "lib/assets/icons/snow.gif";
+      } else if (weatherId >= 700 && weatherId < 800) {
+        imageName = "lib/assets/icons/foggy.gif";
+      } else if (weatherId == 800) {
+        imageName = "lib/assets/icons/sun.gif";
+      } else if (weatherId > 800) {
+        imageName = "lib/assets/icons/clouds.gif";
+      } else {
+        imageName = "lib/assets/icons/error.gif";
+      }
       cityName = userCityName;
       temperature = weatherData['main']['temp'];
       intTemp = temperature.toInt();
@@ -77,7 +97,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 ),
               ),
               Image.asset(
-                'lib/assets/icons/clouds.gif',
+                imageName,
                 height: 80,
                 width: 80,
               ),
