@@ -18,7 +18,7 @@ class _WeatherPageState extends State<WeatherPage> {
   late String cityName = "City";
   late String condition = '';
   late int weatherId = 0;
-  late int windSpeed = 0;
+  late double windSpeed = 0;
   late String imageName = "lib/assets/icons/white.jpg";
 
   //setting values for weather
@@ -46,7 +46,7 @@ class _WeatherPageState extends State<WeatherPage> {
       temperature = weatherData['main']['temp'];
       intTemp = temperature.toInt();
       condition = weatherData['weather'][0]['main'];
-      windSpeed = weatherData['wind']['speed'];
+      windSpeed = double.parse(weatherData['wind']['speed'].toString());
     });
   }
 
@@ -61,7 +61,6 @@ class _WeatherPageState extends State<WeatherPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             //Search City Name widget
             Padding(
@@ -89,41 +88,49 @@ class _WeatherPageState extends State<WeatherPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                cityName,
-                style: GoogleFonts.comfortaa(
-                  color: Colors.black,
-                  //fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            Image.asset(
-              imageName,
-              height: 80,
-              width: 80,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "$intTemp °C",
-                style: GoogleFonts.comfortaa(
-                  color: Colors.black,
-                  fontSize: 42,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "$condition ⋄ $windSpeed kmph",
-                style: GoogleFonts.comfortaa(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
+
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      cityName,
+                      style: GoogleFonts.comfortaa(
+                        color: Colors.black,
+                        //fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  Image.asset(
+                    imageName,
+                    height: 150,
+                    width: 150,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "$intTemp °C",
+                      style: GoogleFonts.comfortaa(
+                        color: Colors.black,
+                        fontSize: 42,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "$condition ⋄ $windSpeed kmph",
+                      style: GoogleFonts.comfortaa(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
