@@ -10,19 +10,21 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  var textController = TextEditingController();
+  // declaring variables
+  var textController =
+      TextEditingController(); // text editing controller to control text given in text field
   double temperature = 0;
   int intTemp = 0;
   late String cityName = "City";
   late String condition = '';
   late int weatherId = 0;
-
+  late int windSpeed = 0;
   late String imageName = "lib/assets/icons/white.jpg";
 
+  //setting values for weather
   Future<void> setWeatherData(String userCityName) async {
     WeatherService weatherService = WeatherService(cityName: cityName);
     dynamic weatherData = await weatherService.getWeatherData();
-
     setState(() {
       weatherId = weatherData["weather"][0]["id"];
       if (weatherId >= 200 && weatherId < 400) {
@@ -44,6 +46,7 @@ class _WeatherPageState extends State<WeatherPage> {
       temperature = weatherData['main']['temp'];
       intTemp = temperature.toInt();
       condition = weatherData['weather'][0]['main'];
+      windSpeed = weatherData['wind']['speed'];
     });
   }
 
@@ -57,73 +60,73 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              //Search City Name
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  textInputAction: TextInputAction.done,
-                  onSubmitted: (value) {
-                    setWeatherData(value);
-                  },
-                  controller: textController,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(25.0),
-                      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            //Search City Name widget
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) {
+                  setWeatherData(
+                      value); // when tapping done, setWeatherData is called and values are set
+                },
+                controller: textController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(25.0),
                     ),
-                    hintText: "Search City...",
-                    contentPadding: const EdgeInsets.all(6.0),
-                    suffixIcon: IconButton(
-                      onPressed: () => textController.text = "",
-                      icon: const Icon(Icons.close),
-                    ),
-                    prefixIcon: const Icon(Icons.search),
                   ),
+                  hintText: "Search City...",
+                  contentPadding: const EdgeInsets.all(6.0),
+                  suffixIcon: IconButton(
+                    onPressed: () => textController.text = "",
+                    icon: const Icon(Icons.close),
+                  ),
+                  prefixIcon: const Icon(Icons.search),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  cityName,
-                  style: GoogleFonts.comfortaa(
-                    color: Colors.black,
-                    //fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                cityName,
+                style: GoogleFonts.comfortaa(
+                  color: Colors.black,
+                  //fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
               ),
-              Image.asset(
-                imageName,
-                height: 80,
-                width: 80,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "$intTemp °C",
-                  style: GoogleFonts.comfortaa(
-                    color: Colors.black,
-                    fontSize: 42,
-                  ),
+            ),
+            Image.asset(
+              imageName,
+              height: 80,
+              width: 80,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "$intTemp °C",
+                style: GoogleFonts.comfortaa(
+                  color: Colors.black,
+                  fontSize: 42,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  condition,
-                  style: GoogleFonts.comfortaa(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "$condition ⋄ $windSpeed kmph",
+                style: GoogleFonts.comfortaa(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
