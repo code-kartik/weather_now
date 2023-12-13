@@ -24,7 +24,10 @@ class _WeatherPageState extends State<WeatherPage> {
   //setting values for weather
   Future<void> setWeatherData(String userCityName) async {
     WeatherService weatherService = WeatherService(cityName: cityName);
-    dynamic weatherData = await weatherService.getWeatherData();
+    dynamic weatherData = await weatherService
+        .getWeatherData(); // await is used to wait for data to be processed before moving ahead
+
+    // setState is used to make changes in the UI
     setState(() {
       weatherId = weatherData["weather"][0]["id"];
       if (weatherId >= 200 && weatherId < 400) {
@@ -62,7 +65,7 @@ class _WeatherPageState extends State<WeatherPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            //Search City Name widget
+            //Search bar and search button in the row
             Row(
               children: [
                 Padding(
@@ -81,14 +84,27 @@ class _WeatherPageState extends State<WeatherPage> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(25.0),
                         ),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(25.0),
+                        ),
+                        borderSide: BorderSide(color: Colors.black),
                       ),
                       hintText: "Search City...",
                       contentPadding: const EdgeInsets.all(6.0),
                       suffixIcon: IconButton(
                         onPressed: () => textController.text = "",
-                        icon: const Icon(Icons.close),
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.black,
+                        ),
                       ),
-                      prefixIcon: const Icon(Icons.search),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -96,6 +112,7 @@ class _WeatherPageState extends State<WeatherPage> {
                   onPressed: () async {
                     setWeatherData(textController.text);
                   },
+                  backgroundColor: Colors.black,
                   child: const Icon(Icons.search),
                 ),
               ],
@@ -111,15 +128,21 @@ class _WeatherPageState extends State<WeatherPage> {
                       cityName,
                       style: GoogleFonts.comfortaa(
                         color: Colors.black,
-                        //fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Image.asset(
                     imageName,
-                    height: 150,
-                    width: 150,
+                    height: 180,
+                    width: 180,
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
                     padding: const EdgeInsets.all(16.0),
@@ -131,10 +154,13 @@ class _WeatherPageState extends State<WeatherPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "$condition ⋄ $windSpeed kmph",
+                      "$condition ◆ $windSpeed kmph",
                       style: GoogleFonts.comfortaa(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
