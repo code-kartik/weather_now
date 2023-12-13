@@ -63,30 +63,42 @@ class _WeatherPageState extends State<WeatherPage> {
         child: Column(
           children: <Widget>[
             //Search City Name widget
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                textInputAction: TextInputAction.done,
-                onSubmitted: (value) {
-                  setWeatherData(
-                      value); // when tapping done, setWeatherData is called and values are set
-                },
-                controller: textController,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25.0),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      setWeatherData(
+                          value); // when tapping done, setWeatherData is called and values are set
+                    },
+                    controller: textController,
+                    decoration: InputDecoration(
+                      constraints:
+                          const BoxConstraints.tightFor(width: 320, height: 50),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(25.0),
+                        ),
+                      ),
+                      hintText: "Search City...",
+                      contentPadding: const EdgeInsets.all(6.0),
+                      suffixIcon: IconButton(
+                        onPressed: () => textController.text = "",
+                        icon: const Icon(Icons.close),
+                      ),
+                      prefixIcon: const Icon(Icons.search),
                     ),
                   ),
-                  hintText: "Search City...",
-                  contentPadding: const EdgeInsets.all(6.0),
-                  suffixIcon: IconButton(
-                    onPressed: () => textController.text = "",
-                    icon: const Icon(Icons.close),
-                  ),
-                  prefixIcon: const Icon(Icons.search),
                 ),
-              ),
+                FloatingActionButton(
+                  onPressed: () async {
+                    setWeatherData(textController.text);
+                  },
+                  child: const Icon(Icons.search),
+                ),
+              ],
             ),
 
             Expanded(
